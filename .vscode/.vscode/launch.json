@@ -1,0 +1,19 @@
+
+
+    {
+        "name": "C Launch",
+        "request": "launch",
+        "program": "${workspaceFolder}/0612.c",
+        "args": ["<", "input.txt"],
+        "cwd": "${workspaceFolder}",
+        "configurations": [
+            {
+                "type": "java",
+                "name": "test",
+                "request": "launch",
+                "mainClass": "test",
+                "projectName": "sem3_94674689"
+            }
+        ]
+   }
+

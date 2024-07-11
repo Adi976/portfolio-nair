@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIgn-up</title>
+    <style>
+      .container {
+        padding: 30px;
+        width: 500px;
+        background-color: blanchedalmond;
+        align-items: center;
+        box-shadow: 0 0 10 rgba(0, 0, 0, 0.3);
+      }
+      label {
+        width: 100px;
+      }
+      table,
+      th,
+      td,
+      tr {
+        margin: 30px;
+        align-items: center;
+      }
+      #bt {
+        background-color: darkorange;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Sign-up Today</h1>
+      <form>
+        <table>
+          <tr>
+            <td>
+              <label
+                >Name:<br />
+                <input type="text" id="name" required />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label
+                >Password:<br />
+                <input type="password" id="password" required />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label
+                >Confirm Password:<br />
+                <input type="password" id="password" required />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label
+                >Email:<br />
+                <input type="email" id="email" required />
+              </label>
+            </td>
+          </tr>
+        </table>
+        <button id="bt">Register</button>
+      </form>
+    </div>
+  </body>
+</html>

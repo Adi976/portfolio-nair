@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Playlist</title>
+    <style>
+      /* Add this CSS code to style your playlist.html page */
+
+      body {
+        background-image: url("ind2.jpeg"); /* Replace with your background image */
+        background-size: cover;
+        color: white;
+        opacity: 8;
+        margin-left: 20px;
+        /* Add any other body styles you need */
+      }
+
+      header {
+        /* Your header styles go here */
+        /* Example styles for a sticky header with a border */
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        border: 1px solid;
+        height: 60px;
+        background-color: black;
+        line-height: 60px;
+        border-radius: 5px;
+      }
+
+      main {
+        /* Your main content styles go here */
+        /* Example styles for the playlist container */
+        margin: 20px; 
+      }
+
+      h1#playlistName {
+        /* Styles for the playlist name heading */
+        /* Example styles */
+
+        font-size: 24px;
+        color:#1db954;
+        text-align:center;
+        margin-bottom: 20px; 
+      }
+
+      ul.song-list {
+        /* Styles for the song list */
+        /* Example styles */
+        list-style-type: none;
+        padding: 0;
+      }
+
+      ul.song-list li {
+        /* Styles for each song item */
+        /* Example styles */
+        font-size:16px;
+        margin-bottom:12px;
+        padding:8px;
+        background-color: rgba(0,0,0,0.2);
+        border-radius: 5px;
+       
+      }
+
+      footer {
+        /* Your footer styles go here */
+        /* Example styles for a footer with buttons */
+        background-color: black;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+
+      footer button {
+        /* Styles for footer buttons */
+        /* Example styles */
+        background-color: #1db954;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        margin: 8px;
+        cursor: pointer;
+        transition:background-color 0.3s ease;
+      }
+      footer buttton:hover{
+        background-color: #14753e;
+      }
+
+      /* Add any other styles you need for your specific design */
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1 id="playlistName">Playlist Name</h1>
+      <ul class="song-list" id="songList">
+        <!-- Dynamic content will be loaded here -->
+      </ul>
+    </main>
+    <footer>
+      <!-- Your footer content goes here -->
+    </footer>
+    <script>
+      // Sample playlist data (you would fetch this from a source)
+      const playlistData = {
+        playlistName: "My Awesome Playlist",
+        songs: [
+          "Song 1 - song1.mp3",
+          "Song 2 - song2.mp3",
+          "Song 3 - song3.mp3",
+          // Add more songs as needed
+        ],
+      };
+
+      // Function to populate the playlist page with data
+      function populatePlaylistPage() {
+        // Get references to HTML elements
+        const playlistNameElement = document.getElementById("playlistName");
+        const songListElement = document.getElementById("songList");
+
+        // Set the playlist name
+        playlistNameElement.textContent = playlistData.playlistName;
+
+        // Populate the song list
+        playlistData.songs.forEach((song) => {
+          const listItem = document.createElement("li");
+          const audio = document.createElement("audio");
+          const source = document.createElement("source");
+
+          // Extract song name and file name
+          const [songName, fileName] = song.split(" - ");
+
+          // Set the audio source and controls
+          audio.controls = true;
+          source.src = fileName;
+          audio.appendChild(source);
+
+          // Add song name and audio element to the list item
+          listItem.textContent = songName;
+          listItem.appendChild(audio);
+
+          // Add the list item to the song list
+          songListElement.appendChild(listItem);
+        });
+      }
+
+      // Call the function to populate the playlist page
+      populatePlaylistPage();
+    </script>
+  </body>
+</html>

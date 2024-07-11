@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var number=prompt("Enter a word")
+        var inarray=number.split(" ");
+        var countn=0;
+            var countp=0;
+            var countz=0;
+        function counter(inarray)
+        {
+            var option=prompt("enter option");
+            switch(option)
+            {
+                case 'o': for(let i=0;i<inarray.length;i++)
+                            {
+                                if(inarray[i]==0)
+                                countz++;
+                            }
+                            break;
+                case'1': for(let i=0;i<inarray.length;i++)
+                            {
+                                if(inarray[i]>0)
+                                countp++;
+                            }
+                            break;
+                case'-1':for(let i=0;i<inarray.length;i++)
+                            {
+                                if(inarray[i]<0)
+                                countn++;
+                            }
+                            break;
+            }
+        }
+        alert(countp);
+        alert(countn);
+        alert(countz);
+    </script>
+</body>
+</html> 

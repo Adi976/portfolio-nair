@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Calculator</title>
+    <style>
+      .container {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+        align-items: center;
+        padding: 10px;
+        margin: 30 30 30 30px;
+      }
+      .buttons {
+        margin: 10px;
+        padding: 20 20 20 20px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+      }
+      button {
+        padding: 20px;
+        margin: 10px;
+        background-color: rgb(246, 156, 20);
+        border-radius: 7px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <p>0</p>
+    </div>
+    <div class="buttons">
+      <button onclick="appendToDisplay('1')">1</button>
+      <button onclick="appendToDisplay('2')">2</button>
+      <button onclick="appendToDisplay('3')">3</button>
+      <button onclick="appendToDisplay('4')">4</button>
+      <button onclick="appendToDisplay('5')">5</button>
+      <button onclick="appendToDisplay('6')">6</button>
+      <button onclick="appendToDisplay('7')">7</button>
+      <button onclick="appendToDisplay('8')">8</button>
+      <button onclick="appendToDisplay('9')">9</button>
+      <button onclick="appendToDisplay('+')">+</button>
+      <button onclick="appendToDisplay('-')">-</button>
+      <button onclick="appendToDisplay('(')">(</button>
+      <button onclick="appendToDisplay(')')">)</button>
+      <button onclick="appendToDisplay('%')">%</button>
+      <button onclick="appendToDisplay('*')">*</button>
+      <button onclick="clearDisplay('C')">*</button>
+    </div>
+  </body>
+</html>

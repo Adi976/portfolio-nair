@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 10px;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      #input-el {
+        width: 500px;
+        height: 40px;
+        padding: 10px;
+        border: 1px solid;
+        border-color: #5f9341;
+        box-sizing: border-box;
+      }
+      #input-btn {
+        width: 120px;
+        height: 50px;
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #5f9341;
+        color: white;
+        border-style: none;
+        font-weight: bold;
+      }
+      #ul-list {
+        list-style-type: none;
+        padding:0;
+        margin-top:20px ;
+      }
+      li {
+        margin-top: 5px;
+      }
+      li a{
+        color:#5f9341;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="text" id="input-el" /><br />
+    <button id="input-btn">SAVE INPUT</button>
+    <ul id="ul-list"></ul>
+    <script>
+      const inbtn = document.getElementById("input-btn");
+      const inputEl = document.getElementById("input-el");
+      let myLeads = [];
+      const ulEl = document.getElementById("ul-list");
+
+      inbtn.addEventListener("click", function () {
+        myLeads.push(inputEl.value);
+        renderLeads();
+        inputEl.value = "";
+      });
+      function renderLeads() {
+        let listItems = "";
+        for (let i = 0; i < myLeads.length; i++) {
+          listItems += "<li><a target='_blank' href='#'>" + myLeads[i] + "</a></li>";
+        }
+        ulEl.innerHTML = listItems;
+      }
+    </script>
+  </body>
+</html>

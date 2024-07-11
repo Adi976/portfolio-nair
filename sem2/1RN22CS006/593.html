@@ -1,0 +1,57 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>instant addition</title>
+</head>
+<body>
+    <form oninput="result.value = parseInt(num1.value) + parseInt(num2.value)">
+        <input type="number" id="num1" value="0">
+        <span> + </span>
+        <input type="number" id="num2" value="0">
+        <span> = </span>
+        <output name="result" for="num1 num2">0</output>
+      </form>
+      
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text Animation</title>
+</head>
+<body>
+    <p id="animatedText" style="color: red; font-size: 10pt;">TEXT-GROWING</p>
+    
+    <script>
+        const textElement = document.getElementById('animatedText');
+        let fontSize = 10; // Initial font size
+        let growing = true;
+
+        function animateText() {
+            if (growing) {
+                fontSize += 1;
+                textElement.style.fontSize = `${fontSize}pt`;
+
+                if (fontSize >= 50) {
+                    textElement.style.color = 'blue';
+                    textElement.textContent = 'TEXT-SHRINKING';
+                    growing = false;
+                }
+            } else {
+                fontSize -= 1;
+                textElement.style.fontSize = `${fontSize}pt`;
+
+                if (fontSize <= 5) {
+                    clearInterval(animationInterval);
+                }
+            }
+        }
+
+        const animationInterval = setInterval(animateText, 100); // Run every 100ms
+    </script>
+</body>
+</html>
+

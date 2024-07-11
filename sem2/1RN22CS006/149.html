@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple Calculator</h1>
+    <input type="number" id="fn" placeholder="first number"><input type="number" id="sn" placeholder="second number"><br><br>
+
+    <button id="add" onclick="add()">Add</button>
+    <button id="Sub" onclick="sub()">Subtract</button>
+    <button id="Divide" onclick="div()">Divide</button>
+    <br>
+    <br>
+    <button id="Multipy" onclick="mul()">Multiply</button>
+    <p>Result:<p id="result">0</p></p>
+    <script>
+        var res=0;
+        function add()
+        {
+            var fn=parseFloat(document.getElementById("fn").value);
+            var sn=parseFloat(document.getElementById("sn").value);
+            res=fn+sn;
+            document.getElementById("result").innerText=res;
+        }
+
+        function sub(){
+            var fn=parseFloat(document.getElementById("fn").value);
+            var sn=parseFloat(document.getElementById("sn").value);
+            res=fn-sn;
+            document.getElementById("result").innerText=res;
+            
+        }
+        function mul(){
+            var fn=parseFloat(document.getElementById("fn").value);
+            var sn=parseFloat(document.getElementById("sn").value);
+            res=fn*sn;
+            document.getElementById("result").innerText=res;
+            
+        }
+        function div(){
+            var fn=parseFloat(document.getElementById("fn").value);
+            var sn=parseFloat(document.getElementById("sn").value);
+            res=fn/sn;
+            document.getElementById("result").innerText=res;
+            
+        }
+    </script>
+</body>
+</html>

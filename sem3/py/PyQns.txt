@@ -1,0 +1,146 @@
+1. Find factorial using functions
+
+def fact(num):
+    ft=1
+    while(num>0):
+        ft*=num
+        num=num-1
+    return ft
+
+num=int(input("Enter a number:"))
+f=fact(num)
+print('Factorial is',f)
+    
+2. Largest element in an array
+
+import random
+
+arr = []
+for i in range(0, 11):
+    arr.append(random.randint(0, 100))  
+
+max=arr[0]
+for i in range (0,11):
+    if(arr[i]>max):
+        max=arr[i]
+print('Largest:',max)
+print(arr)
+
+3.Find mean of given numbers
+
+import random
+
+arr = []
+for i in range(0, 11):
+    arr.append(random.randint(0, 6))  
+
+mean=0
+
+for i in range(0,11):
+    mean+=arr[i]
+    
+print('Mean:',mean/10)
+print(arr)
+
+4. Draw a line in the diagram from position (0,0)to(6,250)
+
+import matplotlib.pyplot as plt
+
+x=[0,6]
+y=[0,250]
+
+plt.plot(x,y,marker='o',markerfacecolor='red')
+plt.show()
+
+5. Draw a bar plot histogram pie chart and a scatter plot by creating data using dictionaries
+
+import matplotlib.pyplot as plt
+
+bar_data={
+    'Adi':500,
+    'Bob':400,
+    'Mary':700,
+    'Jason':200
+}
+
+plt.bar(bar_data.keys(),bar_data.values())
+plt.show()
+
+6. Analyse relationship between persons age and income in a data scatter
+
+import matplotlib.pyplot as plt
+
+age=[56,45,78,23,48,19]
+income=[10,20,30,40,50,60]
+
+plt.scatter(age,income)
+plt.title("Age-Income Analysis")
+plt.show()
+
+7. A teacher wants to understand exam scores create a histogram to visualise the distribution adjust the number of bins to make the plot interactive
+
+import matplotlib.pyplot as plt
+
+exam_scores = [55, 65, 70, 75, 80, 85, 90, 95, 100, 100, 90]
+
+plt.hist(exam_scores, bins=5) 
+plt.xlabel('Exam Scores')
+plt.ylabel('Frequency')
+plt.title('Distribution of Exam Scores')
+plt.show()
+
+
+8. A financial consultant wants to visualise a client's monthly expenses create a piechart of expense breakdown include percentage labels and a title for the chart
+
+import matplotlib.pyplot as plt
+
+expenses=[55,50,62,49,59]
+labels=["Jan","Feb","Mar","Apr","May"]
+
+plt.pie(expenses,labels=labels, autopct='%1.1f%%')
+plt.show()
+
+9. You have recorded temp data over a week visualise temp trends in a week using line plot customise the line style colour and markers 
+
+import matplotlib.pyplot as plt
+
+temp_data=[35,36,34,38,37,36,35]
+days=["Mon","Tue","Wed","Thur","Fri","Sat","Sun"]
+plt.plot(days,temp_data,color="yellow",marker='o',markerfacecolor="red")
+plt.show()
+
+
+10. Analyse the relationship between study hours and exam scores for a group of students create a scatter plot to visualise the data include labels for x axis 
+
+11. A family wants to visualise the allocation of their monthly budget among different categories. create a stacked bar chart to represent the budget allocation. Customise colors
+
+import matplotlib.pyplot as plt
+
+import matplotlib.pyplot as plt
+
+y1=[2,4,5,6,7]
+y2=[3,1,2,4,5]
+
+x=['A','B','C','D','E']
+
+plt.bar(x,y1,label="Group 1")
+plt.bar(x,y2,bottom=y1,label="Group 2")
+plt.show()
+
+12. A web analyst wants to visualise the distribution of a websites traffic sources create a pychart and adjust the start angle
+
+import matplotlib.pyplot as plt
+
+traffic = [45, 57, 20, 34, 52, 43, 55]
+days = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"]
+
+plt.pie(traffic, labels=days, autopct='%1.1f%%')
+plt.show()
+
+
+13. Analyse the visualisations draw conclusions and insights about the student performance
+1. who scored highest abd lowest
+2. Is there a corelation between study hours and test scores
+3. What is the typical distribution of study hours
+4. How do attendance percentage differ among the students
+5. How have the test scores changed among the students

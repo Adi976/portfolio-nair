@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <title>MyCAl</title>
+    <style>
+      .container {
+        border-radius: 10px;
+        width:350px;
+        background-color: #F0C0FF;
+        align-items: center;
+        margin: 30 30 30 30px;
+      }
+      .buttons {
+        display: grid;
+        padding:20px;
+        grid-template-columns:repeat(4,1fr);
+        background-color: #F0C0FF;
+        border: 1px;
+        padding: 10 10 10 10 px;
+      }
+      button{
+        border-radius: 5px;
+        padding:20px;
+        margin:8px;
+        background-color: #8D918D;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="z">
+        <p>0</p>
+      </div>
+      <div class="buttons">
+        <button onclick="appendToDisplay('1')">1</button>
+        <button onclick="appendToDisplay('2')">2</button>
+        <button onclick="appendToDisplay('3')">3</button>
+        <button onclick="appendToDisplay('4')">4</button>
+        <button onclick="appendToDisplay('5')">5</button>
+        <button onclick="appendToDisplay('6')">6</button>
+        <button onclick="appendToDisplay('7')">7</button>
+        <button onclick="appendToDisplay('8')">8</button>
+        <button onclick="appendToDisplay('9')">9</button>
+        <button onclick="appendToDisplay('+')">+</button>
+        <button onclick="appendToDisplay('-')">-</button>
+        <button onclick="appendToDisplay('(')">(</button>
+        <button onclick="appendToDisplay(')')">)</button>
+        <button onclick="appendToDisplay('%')">%</button>
+        <button onclick="appendToDisplay('*')">*</button>
+        <button onclick="clearDisplay('C')">*</button>
+      </div>
+    </div>
+  </body>
+</html>

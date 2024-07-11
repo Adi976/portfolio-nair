@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>C</title>
+<style>
+    calculator { 
+        display: flex; 
+        flex-direction: column;
+         width: 350px; margin: 10px; 
+         border: 1px solid #ccc; 
+         border-radius: 15px;
+          background-color: #F0C0FF; 
+        }
+    .display {
+         background-color: #fff; 
+         border-radius: 10px; 
+         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); 
+         justify-content: flex-end; 
+         align-items: center; 
+         padding: 10px; 
+         margin-left: 30px;
+          margin-right: 30px; 
+          margin-top: 30px; 
+        } 
+    .buttons{
+         display: grid; 
+         grid-template-columns:repeat(4, 1fr); 
+         padding: 20px; 
+        } 
+    button { 
+        padding: 20px; 
+        background-color:khaki; 
+        border: 1px solid #ccc; 
+        border-radius: 10px; 
+        cursor: pointer;
+        margin: 10px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    button:hover {
+    background-color: #d9d9d9;
+    }
+    button:active {
+    background-color: #bfbfbf;
+    }
+    #result{
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    }
+</style>
+</head>
+<body>
+<div class="calculator">
+<div class="display">
+<p id="result">0</p>
+</div>
+<div class="buttons">
+<button onclick="appendToDisplay('(')">(</button>
+<button onclick="appendToDisplay(')')">)</button>
+<button onclick="clearDisplay('C')">C</button>
+<button onclick="appendToDisplay('%')">%</button>
+<button onclick="appendToDisplay('7')">7</button>
+<button onclick="appendToDisplay('8')">8</button>
+<button onclick="appendToDisplay('9')">9</button>
+<button onclick="appendToDisplay('X')">X</button>
+<button onclick="appendToDisplay('4')">4</button>
+<button onclick="appendToDisplay('5')">5</button>
+<button onclick="appendToDisplay('6')">6</button>
+<button onclick="appendToDisplay('-')">-</button>
+<button onclick="appendToDisplay('1')">1</button> 
+<button onclick="appendToDisplay('2')">2</button> 
+<button onclick="appendToDisplay('3')">3</button> 
+<button onclick="appendToDisplay('+')">+</button> 
+<button onclick="appendToDisplay('0')">0</button> 
+<button onclick="appendToDisplay('.')">.</button> 
+<button onclick="appendToDisplay('/')">/</button> 
+<button onclick="evaluate()">=</button>
+ </div> 
+</div> 
+</body> 
+</html>

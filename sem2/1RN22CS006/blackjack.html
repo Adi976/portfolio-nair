@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blackjack</title>
+    <style>
+      * {
+        text-align: center;
+      }
+      body {
+        color: white;
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans", Arial, sans-serif;
+        background-color: rgb(12, 121, 12);
+      }
+      h1 {
+        color: goldenrod;
+      }
+      button {
+        color: #016f32;
+        padding: 5px;
+        font-size: 18px;
+        border: none;
+        border-radius: 2px;
+        background-color: goldenrod;
+        width: 150px;
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Blackjack</h1>
+    <h2 id="message-el">Want to play a round?</h2>
+    <h4 id="cards-el">Cards:</h4>
+    <h4 id="sum-el">Sum:</h4>
+    <div id="button-container" style="text-align: center">
+      <button id="sgm" onclick="stgame()">START GAME</button><br />
+      <p id="ncn"></p>
+      <p id="gmo"></p>
+    </div>
+
+    <script>
+      let firstCard = Math.floor(Math.random() * 11) + 1;
+      let secondCard = Math.floor(Math.random() * 11) + 1;
+      let newCard = Math.floor(Math.random() * 11) + 1;
+
+      // Calculate the initial sum
+      let sum = firstCard + secondCard;
+
+      let hasBlackJack = false;
+      let isAlive = true;
+      let message = "";
+
+      let messageEl = document.getElementById("message-el");
+      let sumEl = document.getElementById("sum-el");
+      let cardEl = document.getElementById("cards-el");
+      let card = document.getElementById("ncn");
+      let gam = document.getElementById("gmo");
+
+      function stgame() {
+        card.outerHTML =
+          '<button id="ncn" onclick="newCards()" style="text-align: center;">NEW CARD</button>';
+        renderGame();
+      }
+
+      function renderGame() {
+        sumEl.textContent = "Sum:" + sum;
+        cardEl.textContent = "Cards: " + firstCard + " & " + secondCard;
+        if (sum <= 20) {
+          message = "Do you want to draw a new card?";
+        } else if (sum === 21) {
+          message = "Wohoo! You've got Blackjack!";
+          hasBlackJack = true;
+        } else {
+          message = "You're out of the game!";
+          messageEl.textContent = message;
+          gam.outerHTML =
+            '<h2 id="ncn" style="text-align: center; color:orangered">GAME OVER</h2>';
+          setTimeout(function () {
+            refreshGame();
+          }, 1200);
+        }
+      }
+
+      function newCards() {
+        if (sum < 21) {
+          newCard = Math.floor(Math.random() * 11) + 1;
+          sum += newCard;
+          cards++;
+          sumEl.textContent = "Sum:" + sum;
+          cardEl.textContent =
+            "Cards: " + (firstCard + " & " + (secondCard + " & " + newCard));
+          setTimeout(function () {
+            renderGame();
+          }, 1200);
+        } else if (sum > 21) {
+          message = "You're out of the game!";
+          card.textContent = "GAME OVER";
+        } else {
+          message = "Wohoo! You've got Blackjack!";
+          hasBlackJack = true;
+        }
+      }
+
+      function refreshGame() {
+        sum = firstCard + secondCard;
+        message = "You're out of the game! Do you Want to play a new round?";
+        sumEl.textContent = "Sum: " + 0;
+        cardEl.textContent = "Cards: ";
+      }
+    </script>
+  </body>
+</html>

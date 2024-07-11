@@ -1,0 +1,270 @@
+body {
+  background-color: rgba(0, 0, 0, 0.8);
+  background-image: url("ind3.jpeg");
+  background-size: cover;
+  color: white;
+  opacity: 8;
+  margin-left: 20px;
+}
+a {
+  text-decoration: none;
+  color: white;
+  padding: 10px;
+}
+header.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border: 1px solid;
+  height: 60px;
+  background-color: black;
+  line-height: 60px;
+  border-radius: 5px;
+}
+.homepage {
+  margin-bottom: 100px;
+}
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.item {
+  width: calc(33.33%-20px);
+  margin: 10px;
+}
+.playlists-container {
+  display: flex;
+  flex-direction: column;
+  align-items: left; /* Centers the content horizontally */
+}
+.play {
+  color: gainsboro;
+  width: fit-content;
+  height: fit-content;
+}
+.nav button {
+  border: none;
+  color: white;
+  background-color: black;
+}
+/* Style play and pause icons */
+button i {
+  font-size: 10px; /* Adjust the size as needed */
+  color: white; /* Icon color */
+  margin-right: 5px; /* Add spacing between icon and text if needed */
+}
+
+.nav {
+  display: inline;
+  list-style-type: none;
+}
+.nav li {
+  display: inline;
+}
+
+.nav li:nth-child(5),
+.nav li:nth-child(6) {
+  float: right;
+}
+.nav li img {
+  display: inline;
+  width: 30px;
+  height: 30px;
+}
+.bo {
+  display: flex;
+  flex-direction: row;
+}
+
+.bo li {
+  list-style-type: none;
+}
+.bocontainer {
+  height: fit-content;
+  width: fit-content;
+  height: 100%;
+  background-color: white;
+}
+/* Adjust the positioning and size of the playlist name */
+.playlist {
+  background-color: #1db954;
+  display: inline-block; /* Display containers next to each other */
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+  border-radius: 5px;
+  text-align: center; /* Center text horizontally */
+}
+
+.playlist img {
+  width: 100%; /* Make the image expand to the container width */
+  height: auto; /* Maintain image aspect ratio */
+}
+
+.playlist .playlist-name {
+  font-size: 14px; /* Adjust the font size as needed */
+  position: absolute; /* Position the name at the bottom */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+  color: white;
+  padding: 5px; /* Add padding around the name */
+  text-align: center; /* Center text horizontally */
+  margin-top: 5px; /* Add spacing between image and text */
+}
+
+.playlist1 {
+  background-color: black;
+  background-image: url("i1.jpeg");
+  border-color: white;
+  border:3px;
+  background-size: cover;
+}
+.playlist2 {
+  background-color: black;
+  background-image: url("i2.jpeg");
+  background-size: cover;
+}
+.playlist3 {
+  background-color: black;
+  background-image: url("cat.jpg");
+  background-size: cover;
+}
+.playlist4 {
+  background-color: black;
+  background-image: url("dog.jpg");
+  background-size: cover;
+}
+
+.play {
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  position: bottom;
+}
+/* Style for the player controls */
+.player-controls {
+  display: flex;
+  align-items: center;
+}
+
+.player-controls button {
+  background-color: #1db954;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  justify-content: center;
+}
+
+/* Style for the progress bar */
+#progressBar {
+  width: 100%;
+}
+
+/* Style for the song info */
+.song-info {
+  margin-left: 20px;
+}
+
+.song-info p {
+  margin: 0;
+  color: white;
+  font-size: 14px;
+}
+.player-controls,
+.song-info {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center horizontally */
+}
+/* Default styles for all screen sizes */
+/* You can place your default styles here */
+
+/* Media Query for Screens Smaller Than 576px (e.g., Mobile Phones) */
+@media screen and (max-width: 575px) {
+  /* Styles for mobile phones */
+  /* Example: Adjust font size and spacing for small screens */
+  body {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+/* Media Query for Screens Between 576px and 767px (e.g., Small Tablets) */
+@media screen and (min-width: 576px) and (max-width: 767px) {
+  /* Styles for small tablets */
+  /* Example: Change the layout for small tablets */
+  .container {
+    flex-direction: column;
+  }
+}
+
+/* Media Query for Screens Between 768px and 991px (e.g., Tablets) */
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  /* Styles for tablets */
+  /* Example: Adjust margins and font sizes for tablets */
+  .item {
+    margin: 8px;
+  }
+}
+
+/* Media Query for Screens Larger Than 992px (e.g., Desktops) */
+@media screen and (min-width: 992px) {
+  /* Styles for desktops */
+  /* Example: Increase font size and add extra spacing for desktops */
+  body {
+    font-size: 16px;
+    padding: 20px;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+/* Style for the like button */
+/* Style for the like button */
+/* Style for the like button */
+#likeButton {
+  background-color: #ebc326;
+  border-radius: 50%;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 5px;
+  cursor: pointer;
+  /* Add any other styles you want for the "Like" button */
+}
+
+#likeButton:hover {
+  background-color: #ff0000; /* Change color on hover */
+}
+
+.footer {
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 10px; /* Adjust the padding as needed */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+}
+.footer button {
+  background-color:  #ebc326;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 5px;
+  cursor: pointer;
+}

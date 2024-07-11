@@ -1,0 +1,60 @@
+{
+    "cmake.configureOnOpen": true,
+    "files.associations": {
+        "iostream": "cpp",
+        "array": "c",
+        "string": "c",
+        "type_traits": "c",
+        "list": "c",
+        "ostream": "cpp",
+        "functional": "cpp",
+        "deque": "c",
+        "forward_list": "c",
+        "vector": "c",
+        "exception": "cpp"
+    },
+    "notebook.consolidatedRunButton": false,
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "sql ",
+            "database": "GymManagementSystem",
+            "username": "Adi"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3309,
+            "driver": "MySQL",
+            "name": "sql",
+            "database": "Gym",
+            "username": "Adi"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "xprotocol",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3309,
+            "driver": "MySQL",
+            "name": "sql",
+            "database": "GymManagementSystem",
+            "username": "root",
+            "password": "Anil@1992",
+            "connectionTimeout": 60
+        }
+    ]
+}

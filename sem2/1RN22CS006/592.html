@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Canvas Rotation and Scaling</title>
+    <style>
+      canvas {
+        align-items: center;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="400" height="400"></canvas>
+    <script>
+      const canvas = document.getElementById("myCanvas");
+      const ctx = canvas.getContext("2d");
+      let isAnimating = false;
+
+      // Function to draw a rectangle
+      function drawRectangle() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+        ctx.fillStyle = "blue";
+        ctx.fillRect(50, 50, 100, 50);
+      }
+
+      // Function to rotate the rectangle
+      function rotateRectangle() {
+        let angle = 0;
+        const rotationInterval = setInterval(function () {
+          if (!isAnimating) {
+            clearInterval(rotationInterval);
+            return;
+          }
+
+          angle += 2; // Increment the angle (adjust speed as needed)
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.translate(100, 75); // Translate to the rectangle's center
+          ctx.rotate((Math.PI / 180) * angle); // Rotate by angle in radians
+          ctx.translate(-100, -75); // Translate back
+          drawRectangle();
+        }, 50); // Set the animation frame rate
+      }
+
+      // Function to scale the rectangle
+      function scaleRectangle() {
+        let scaleFactor = 1;
+        const scalingInterval = setInterval(function () {
+          if (!isAnimating) {
+            clearInterval(scalingInterval);
+            return;
+          }
+
+          scaleFactor += 0.1; // Increment the scale factor (adjust speed as needed)
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.scale(scaleFactor, scaleFactor); // Scale the canvas context
+          drawRectangle();
+        }, 50); // Set the animation frame rate
+      }
+
+      // Listen for a click to start animation
+      canvas.addEventListener("click", function () {
+        if (!isAnimating) {
+          isAnimating = true;
+          drawRectangle(); // Initial draw
+          rotateRectangle(); // Start rotation animation
+          setTimeout(function () {
+            scaleRectangle(); // Start scaling animation after a delay
+          }, 3000); // Delay before scaling begins (1 second in this case)
+        }
+      });
+    </script>
+  </body>
+</html>

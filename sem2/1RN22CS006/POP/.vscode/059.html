@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu box</title>
+    <style>
+      .file-menu {
+        position: relative;
+        display: inline-block;
+      }
+
+      .file-menu-button {
+        background-color: #333;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+
+      .file-menu-dropdown {
+        position: absolute;
+        display: none;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        list-style: none;
+        padding: 0;
+      }
+
+      .file-menu-dropdown li {
+        padding: 10px;
+      }
+
+      .file-menu-dropdown a {
+        text-decoration: none;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="file-menu">
+      <button class="file-menu-button">File</button>
+      <ul class="file-menu-dropdown">
+        <li><a href="#">Open</a></li>
+        <li><a href="#">Save</a></li>
+        <li><a href="#">Download</a></li>
+      </ul>
+    </div>
+    <script>
+      const fileMenuButton = document.querySelector(".file-menu-button");
+      const fileMenuDropdown = document.querySelector(".file-menu-dropdown");
+
+      fileMenuButton.addEventListener("click", () => {
+        if (fileMenuDropdown.style.display === "block") {
+          fileMenuDropdown.style.display = "none";
+        } else {
+          fileMenuDropdown.style.display = "block";
+        }
+      });
+    </script>
+  </body>
+</html>
