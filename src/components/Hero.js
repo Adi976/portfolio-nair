@@ -8,10 +8,14 @@ const HeroSection = styled.section`
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: 120px 0 80px;
+  padding: 80px 0 40px;
   background: linear-gradient(135deg, ${({ theme }) => theme.colors.lightBg} 0%, ${({ theme }) => theme.colors.white} 100%);
   position: relative;
   overflow: hidden;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 60px 0 30px;
+  }
 
   &::before {
     content: '';
@@ -33,14 +37,21 @@ const HeroContent = styled(motion.div)`
   margin: 0 auto;
   padding: 0 20px;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     flex-direction: column;
     text-align: center;
+    gap: 40px;
+    padding: 0 15px;
   }
 `;
 
 const TextContent = styled.div`
   flex: 1;
+  padding-right: 20px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding-right: 0;
+  }
 `;
 
 const ProfileImage = styled(motion.div)`
@@ -59,14 +70,15 @@ const ProfileImage = styled(motion.div)`
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     display: block;
     background-color: #f0f0f0;
-  }
 
-  @media (max-width: 768px) {
-    margin-top: 40px;
-    
-    img {
+    @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
       width: 250px;
       height: 250px;
+    }
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+      width: 200px;
+      height: 200px;
     }
   }
 `;
@@ -80,12 +92,20 @@ const Title = styled(motion.h1)`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    font-size: 3.5rem;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     font-size: 3rem;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.small}) {
     font-size: 2.5rem;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 2rem;
   }
 `;
 
@@ -95,6 +115,16 @@ const Description = styled(motion.p)`
   margin-bottom: 40px;
   line-height: 1.6;
   font-family: ${({ theme }) => theme.fonts.body};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 1rem;
+    margin-bottom: 25px;
+  }
 `;
 
 const CTAButton = styled(motion.a)`
@@ -107,6 +137,11 @@ const CTAButton = styled(motion.a)`
   border-radius: 30px;
   font-weight: 500;
   transition: ${({ theme }) => theme.transition};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 14px 28px;
+    font-size: 0.9rem;
+  }
 
   &:hover {
     transform: translateY(-2px);

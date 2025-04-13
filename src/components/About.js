@@ -6,6 +6,10 @@ import { useInView } from 'react-intersection-observer';
 const AboutSection = styled.section`
   padding: ${props => props.theme.spacing.xl} 0;
   background-color: ${props => props.theme.colors.white};
+
+  @media (max-width: ${props => props.theme.breakpoints.tablet}) {
+    padding: ${props => props.theme.spacing.lg} 0;
+  }
 `;
 
 const SectionTitle = styled(motion.h2)`
@@ -15,8 +19,14 @@ const SectionTitle = styled(motion.h2)`
   font-weight: 700;
   position: relative;
 
-  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${props => props.theme.breakpoints.tablet}) {
     font-size: 2.5rem;
+    margin-bottom: ${props => props.theme.spacing.lg};
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    font-size: 2rem;
+    margin-bottom: ${props => props.theme.spacing.md};
   }
 `;
 
@@ -27,6 +37,11 @@ const AboutContent = styled.div`
   max-width: 800px;
   margin: 0 auto;
   padding: 0 ${props => props.theme.spacing.md};
+
+  @media (max-width: ${props => props.theme.breakpoints.tablet}) {
+    padding: 0 ${props => props.theme.spacing.sm};
+    gap: ${props => props.theme.spacing.lg};
+  }
 `;
 
 const AboutText = styled(motion.div)`
@@ -35,6 +50,15 @@ const AboutText = styled(motion.div)`
     margin-bottom: ${props => props.theme.spacing.md};
     color: #666;
     line-height: 1.8;
+
+    @media (max-width: ${props => props.theme.breakpoints.tablet}) {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+      font-size: 0.95rem;
+    }
   }
 `;
 
@@ -43,6 +67,16 @@ const SkillsGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 30px;
   margin-top: 40px;
+
+  @media (max-width: ${props => props.theme.breakpoints.tablet}) {
+    gap: 20px;
+    margin-top: 30px;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
 `;
 
 const SkillCategory = styled(motion.div)`
@@ -51,6 +85,10 @@ const SkillCategory = styled(motion.div)`
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   transition: ${({ theme }) => theme.transition};
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    padding: 20px;
+  }
 
   &:hover {
     transform: translateY(-5px);
@@ -64,6 +102,11 @@ const SkillCategory = styled(motion.div)`
     display: flex;
     align-items: center;
     gap: 10px;
+
+    @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+      font-size: 1rem;
+      margin-bottom: 12px;
+    }
   }
 
   ul {
@@ -72,6 +115,10 @@ const SkillCategory = styled(motion.div)`
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+
+    @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+      gap: 8px;
+    }
   }
 
   li {
@@ -82,6 +129,11 @@ const SkillCategory = styled(motion.div)`
     font-size: 0.9rem;
     font-weight: 500;
     transition: ${({ theme }) => theme.transition};
+
+    @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+      padding: 6px 12px;
+      font-size: 0.85rem;
+    }
 
     &:hover {
       background: ${({ theme }) => theme.colors.accent};

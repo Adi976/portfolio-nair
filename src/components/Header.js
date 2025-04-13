@@ -19,7 +19,13 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: ${props => props.theme.spacing.md} 0;
+  padding: ${props => props.theme.spacing.md} ${props => props.theme.spacing.lg};
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @media (max-width: ${props => props.theme.breakpoints.tablet}) {
+    padding: ${props => props.theme.spacing.sm} ${props => props.theme.spacing.md};
+  }
 `;
 
 const Logo = styled.div`
@@ -27,6 +33,10 @@ const Logo = styled.div`
   font-weight: 600;
   color: ${props => props.theme.colors.primary};
   letter-spacing: -0.5px;
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    font-size: 1.2rem;
+  }
 `;
 
 const NavLinks = styled.ul`
@@ -46,6 +56,8 @@ const NavLinks = styled.ul`
     padding: ${props => props.theme.spacing.xl};
     align-items: center;
     justify-content: center;
+    gap: ${props => props.theme.spacing.xl};
+    z-index: 999;
   }
 `;
 
@@ -56,6 +68,10 @@ const NavLink = styled(motion.li)`
     font-size: 0.95rem;
     position: relative;
     padding: 5px 0;
+
+    @media (max-width: ${props => props.theme.breakpoints.tablet}) {
+      font-size: 1.2rem;
+    }
 
     &::after {
       content: '';
@@ -81,10 +97,16 @@ const MobileMenuButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
+  z-index: 1000;
+  padding: 8px;
 
   @media (max-width: ${props => props.theme.breakpoints.tablet}) {
     display: block;
-    z-index: 1001;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    font-size: 1.2rem;
+    padding: 6px;
   }
 `;
 

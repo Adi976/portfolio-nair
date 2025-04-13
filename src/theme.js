@@ -19,7 +19,8 @@ export const theme = {
     xl: '4rem',
   },
   breakpoints: {
-    mobile: '480px',
+    mobile: '320px',
+    small: '480px',
     tablet: '768px',
     desktop: '1024px',
     wide: '1200px',

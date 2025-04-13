@@ -11,6 +11,14 @@ const ContactSection = styled.section`
   overflow: hidden;
   font-family: ${({ theme }) => theme.fonts.body};
 
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 80px 0;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 60px 0;
+  }
+
   &::before {
     content: '';
     position: absolute;
@@ -31,6 +39,16 @@ const SectionTitle = styled(motion.h2)`
   color: ${({ theme }) => theme.colors.text};
   position: relative;
   font-family: ${({ theme }) => theme.fonts.body};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 3rem;
+    margin-bottom: 60px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+  }
 
   &::after {
     content: '';
@@ -56,6 +74,17 @@ const ContactForm = styled(motion.form)`
   overflow: hidden;
   font-family: ${({ theme }) => theme.fonts.body};
 
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 30px;
+    margin: 0 20px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 20px;
+    margin: 0 15px;
+    border-radius: 15px;
+  }
+
   &::before {
     content: '';
     position: absolute;
@@ -70,6 +99,10 @@ const ContactForm = styled(motion.form)`
 const FormGroup = styled.div`
   margin-bottom: 25px;
   position: relative;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    margin-bottom: 20px;
+  }
 `;
 
 const Label = styled.label`
@@ -80,6 +113,11 @@ const Label = styled.label`
   font-size: 0.9rem;
   letter-spacing: 1px;
   font-family: ${({ theme }) => theme.fonts.body};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+  }
 `;
 
 const Input = styled.input`
@@ -90,6 +128,11 @@ const Input = styled.input`
   font-size: 1rem;
   font-family: ${({ theme }) => theme.fonts.body};
   transition: ${({ theme }) => theme.transition};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 12px;
+    font-size: 0.95rem;
+  }
 
   &:focus {
     outline: none;
@@ -108,6 +151,12 @@ const TextArea = styled.textarea`
   resize: vertical;
   font-family: ${({ theme }) => theme.fonts.body};
   transition: ${({ theme }) => theme.transition};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 12px;
+    font-size: 0.95rem;
+    min-height: 120px;
+  }
 
   &:focus {
     outline: none;
@@ -132,6 +181,12 @@ const SubmitButton = styled(motion.button)`
   gap: 10px;
   transition: ${({ theme }) => theme.transition};
   font-family: ${({ theme }) => theme.fonts.body};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 14px;
+    font-size: 0.95rem;
+    gap: 8px;
+  }
 
   &:hover {
     background: #0062b3;

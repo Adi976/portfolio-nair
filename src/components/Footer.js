@@ -10,6 +10,14 @@ const FooterContainer = styled.footer`
   position: relative;
   overflow: hidden;
 
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 50px 0 25px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 40px 0 20px;
+  }
+
   &::before {
     content: '';
     position: absolute;
@@ -30,10 +38,18 @@ const FooterContent = styled.div`
   align-items: center;
   margin-bottom: 40px;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     flex-direction: column;
     gap: 30px;
     text-align: center;
+    padding: 0 15px;
+    margin-bottom: 30px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    gap: 25px;
+    padding: 0 10px;
+    margin-bottom: 25px;
   }
 `;
 
@@ -41,6 +57,10 @@ const InfoSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    gap: 8px;
+  }
 `;
 
 const Location = styled.div`
@@ -50,6 +70,11 @@ const Location = styled.div`
   color: #999;
   font-size: 0.9rem;
 
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 0.85rem;
+    gap: 8px;
+  }
+
   svg {
     color: ${({ theme }) => theme.colors.accent};
   }
@@ -58,6 +83,10 @@ const Location = styled.div`
 const SocialLinks = styled.div`
   display: flex;
   gap: 20px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    gap: 15px;
+  }
 `;
 
 const SocialLink = styled(motion.a)`
@@ -72,6 +101,12 @@ const SocialLink = styled(motion.a)`
   font-size: 1.2rem;
   transition: ${({ theme }) => theme.transition};
 
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+  }
+
   &:hover {
     background: ${({ theme }) => theme.colors.accent};
     transform: translateY(-3px);
@@ -84,6 +119,11 @@ const Copyright = styled.div`
   font-size: 0.9rem;
   padding-top: 30px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 0.85rem;
+    padding-top: 25px;
+  }
 `;
 
 const ScrollToTop = styled(motion.button)`
@@ -104,6 +144,14 @@ const ScrollToTop = styled(motion.button)`
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   transition: ${({ theme }) => theme.transition};
   z-index: 1000;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 45px;
+    height: 45px;
+    font-size: 1.1rem;
+    bottom: 25px;
+    right: 25px;
+  }
 
   &:hover {
     transform: translateY(-5px);

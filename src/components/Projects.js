@@ -7,6 +7,14 @@ import { FaGithub } from 'react-icons/fa';
 const ProjectsSection = styled.section`
   padding: 120px 0;
   background-color: ${({ theme }) => theme.colors.lightBg};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 80px 0;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 60px 0;
+  }
 `;
 
 const SectionTitle = styled(motion.h2)`
@@ -15,6 +23,16 @@ const SectionTitle = styled(motion.h2)`
   margin-bottom: 80px;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.text};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 2rem;
+    margin-bottom: 40px;
+  }
 `;
 
 const ProjectsGrid = styled.div`
@@ -24,6 +42,18 @@ const ProjectsGrid = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 0 15px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding: 0 10px;
+  }
 `;
 
 const ProjectCard = styled(motion.div)`
@@ -32,6 +62,10 @@ const ProjectCard = styled(motion.div)`
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   transition: ${({ theme }) => theme.transition};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    border-radius: 8px;
+  }
 
   &:hover {
     transform: translateY(-10px);
@@ -44,22 +78,41 @@ const ProjectImage = styled.div`
   background-size: cover;
   background-position: center;
   position: relative;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    height: 180px;
+  }
 `;
 
 const ProjectContent = styled.div`
   padding: 30px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 20px;
+  }
 `;
 
 const ProjectTitle = styled.h3`
   font-size: 1.5rem;
   margin-bottom: 15px;
   color: ${({ theme }) => theme.colors.text};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+  }
 `;
 
 const ProjectDescription = styled.p`
   color: #666;
   margin-bottom: 20px;
   line-height: 1.6;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    line-height: 1.5;
+  }
 `;
 
 const ProjectTags = styled.div`
@@ -67,6 +120,11 @@ const ProjectTags = styled.div`
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 20px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    gap: 8px;
+    margin-bottom: 15px;
+  }
 `;
 
 const Tag = styled.span`
@@ -76,11 +134,20 @@ const Tag = styled.span`
   border-radius: 20px;
   font-size: 0.85rem;
   font-weight: 500;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
 `;
 
 const ProjectLinks = styled.div`
   display: flex;
   gap: 15px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    gap: 12px;
+  }
 `;
 
 const ProjectLink = styled(motion.a)`
@@ -91,6 +158,11 @@ const ProjectLink = styled(motion.a)`
   text-decoration: none;
   font-weight: 500;
   transition: ${({ theme }) => theme.transition};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 0.9rem;
+    gap: 6px;
+  }
 
   &:hover {
     color: ${({ theme }) => theme.colors.primary};
@@ -109,7 +181,7 @@ const Projects = () => {
       description: 'Created a tool for separating vocals and instrumentals from audio files using deep learning models like Demucs. Built a simple interface for karaoke generation.',
       tags: ['Flask', 'Spleeter', 'Demucs', 'Python'],
       image: '/Audio.jpeg',
-      github: 'https://github.com/Adi976/AudioSeparator'
+      github: null
     },
     {
       title: 'Story Pals',
@@ -166,18 +238,20 @@ const Projects = () => {
                   <Tag key={index}>{tag}</Tag>
                 ))}
               </ProjectTags>
-              <ProjectLinks>
-                <ProjectLink
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <FaGithub />
-                  View on GitHub
-                </ProjectLink>
-              </ProjectLinks>
+              {project.github && (
+                <ProjectLinks>
+                  <ProjectLink
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <FaGithub />
+                    View on GitHub
+                  </ProjectLink>
+                </ProjectLinks>
+              )}
             </ProjectContent>
           </ProjectCard>
         ))}

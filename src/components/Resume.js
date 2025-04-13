@@ -7,6 +7,14 @@ import { FaDownload, FaGraduationCap, FaBriefcase, FaCertificate, FaCode } from 
 const ResumeSection = styled.section`
   padding: 120px 0;
   background-color: ${({ theme }) => theme.colors.lightBg};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 80px 0;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 60px 0;
+  }
 `;
 
 const SectionTitle = styled(motion.h2)`
@@ -15,6 +23,16 @@ const SectionTitle = styled(motion.h2)`
   margin-bottom: 80px;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.text};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 2rem;
+    margin-bottom: 40px;
+  }
 `;
 
 const ResumePreview = styled(motion.div)`
@@ -27,6 +45,15 @@ const ResumePreview = styled(motion.div)`
   cursor: pointer;
   transition: ${({ theme }) => theme.transition};
 
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    margin: 0 20px 50px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    margin: 0 15px 40px;
+    border-radius: 8px;
+  }
+
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
@@ -37,11 +64,24 @@ const PreviewHeader = styled.div`
   padding: 30px;
   background: ${({ theme }) => theme.colors.accent};
   color: white;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 20px;
+  }
 `;
 
 const PreviewName = styled.h3`
   font-size: 2rem;
   margin-bottom: 10px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 1.8rem;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
 `;
 
 const PreviewContact = styled.div`
@@ -50,14 +90,32 @@ const PreviewContact = styled.div`
   gap: 20px;
   font-size: 0.9rem;
   opacity: 0.9;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    gap: 15px;
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    gap: 10px;
+    font-size: 0.8rem;
+  }
 `;
 
 const PreviewContent = styled.div`
   padding: 30px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 20px;
+  }
 `;
 
 const PreviewSection = styled.div`
   margin-bottom: 30px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    margin-bottom: 25px;
+  }
 
   h4 {
     font-size: 1.2rem;
@@ -66,11 +124,22 @@ const PreviewSection = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      gap: 8px;
+    }
   }
 
   p {
     color: #666;
     line-height: 1.6;
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
   }
 `;
 
@@ -91,6 +160,17 @@ const DownloadButton = styled(motion.a)`
   text-align: center;
   max-width: 250px;
 
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 14px 28px;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    max-width: 220px;
+  }
+
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 20px rgba(0, 113, 227, 0.2);
@@ -102,6 +182,15 @@ const SkillsGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
   margin-top: 20px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    gap: 15px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
 `;
 
 const SkillCategory = styled.div`
@@ -109,6 +198,11 @@ const SkillCategory = styled.div`
     color: ${({ theme }) => theme.colors.text};
     margin-bottom: 10px;
     font-size: 1rem;
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
   }
 
   ul {
@@ -122,6 +216,12 @@ const SkillCategory = styled.div`
     display: flex;
     align-items: center;
     gap: 8px;
+    font-size: 0.9rem;
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+      font-size: 0.85rem;
+      gap: 6px;
+    }
 
     &::before {
       content: '•';

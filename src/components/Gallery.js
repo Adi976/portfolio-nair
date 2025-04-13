@@ -5,11 +5,15 @@ import { useInView } from "react-intersection-observer";
 
 const GallerySection = styled.section`
   padding: 120px 0;
-  background: linear-gradient(
-    135deg,
-    ${({ theme }) => theme.colors.lightBg} 0%,
-    ${({ theme }) => theme.colors.white} 100%
-  );
+  background-color: ${({ theme }) => theme.colors.lightBg};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 80px 0;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 60px 0;
+  }
 `;
 
 const SectionTitle = styled(motion.h2)`
@@ -18,18 +22,15 @@ const SectionTitle = styled(motion.h2)`
   margin-bottom: 80px;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.text};
-  position: relative;
 
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 4px;
-    background: ${({ theme }) => theme.colors.accent};
-    border-radius: 2px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 2rem;
+    margin-bottom: 40px;
   }
 `;
 
@@ -40,59 +41,100 @@ const GalleryGrid = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
-`;
 
-const ImageContainer = styled(motion.div)`
-  position: relative;
-  border-radius: 15px;
-  overflow: hidden;
-  aspect-ratio: 4/3;
-  cursor: pointer;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: ${({ theme }) => theme.transition};
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    padding: 0 15px;
+  }
 
-  &:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0 10px;
   }
 `;
 
-const Image = styled.img`
+const GalleryItem = styled(motion.div)`
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 16/9;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    border-radius: 8px;
+  }
+
+  &:hover {
+    .overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
+
+const GalleryImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
-
-  ${ImageContainer}:hover & {
-    transform: scale(1.1);
-  }
+  transition: ${({ theme }) => theme.transition};
 `;
 
-const ImageOverlay = styled.div`
+const Overlay = styled.div`
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
-  right: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 20px;
-  transform: translateY(100%);
-  transition: transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: ${({ theme }) => theme.transition};
 
-  ${ImageContainer}:hover & {
-    transform: translateY(0);
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 15px;
   }
 `;
 
 const ImageTitle = styled.h3`
   color: white;
-  font-size: 1.2rem;
-  margin-bottom: 8px;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  text-align: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+  }
 `;
 
 const ImageDescription = styled.p`
   color: rgba(255, 255, 255, 0.9);
-  font-size: 0.9rem;
-  line-height: 1.4;
+  font-size: 1rem;
+  text-align: center;
+  line-height: 1.5;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 0.9rem;
+    line-height: 1.3;
+  }
 `;
 
 const Gallery = () => {
@@ -141,13 +183,13 @@ const Gallery = () => {
       </SectionTitle>
       <GalleryGrid>
         {images.map((image, index) => (
-          <ImageContainer
+          <GalleryItem
             key={index}
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: index * 0.1 }}
           >
-            <Image
+            <GalleryImage
               src={process.env.PUBLIC_URL + image.src}
               alt={image.title}
               onError={(e) => {
@@ -155,11 +197,11 @@ const Gallery = () => {
                 e.target.style.border = "2px solid red";
               }}
             />
-            <ImageOverlay>
+            <Overlay>
               <ImageTitle>{image.title}</ImageTitle>
               <ImageDescription>{image.description}</ImageDescription>
-            </ImageOverlay>
-          </ImageContainer>
+            </Overlay>
+          </GalleryItem>
         ))}
       </GalleryGrid>
     </GallerySection>
