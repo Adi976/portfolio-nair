@@ -94,6 +94,7 @@ const Description = styled(motion.p)`
   color: #666;
   margin-bottom: 40px;
   line-height: 1.6;
+  font-family: ${({ theme }) => theme.fonts.body};
 `;
 
 const CTAButton = styled(motion.a)`
@@ -140,7 +141,7 @@ const Hero = () => {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            I'm a passionate student specializing in Machine Learning, dedicated to creating innovative solutions that make everyday tasks more efficient and enjoyable.
+            Driven by curiosity, fueled by perseverance.
           </Description>
           <CTAButton
             href="#contact"
@@ -157,7 +158,7 @@ const Hero = () => {
         <ProfileImage
           initial={{ opacity: 0, scale: 0.8 }}
           animate={inView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
         >
           <img 
             src={process.env.PUBLIC_URL + "/dp.jpg"} 

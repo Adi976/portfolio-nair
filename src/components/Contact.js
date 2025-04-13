@@ -9,6 +9,7 @@ const ContactSection = styled.section`
   background: linear-gradient(135deg, ${({ theme }) => theme.colors.lightBg} 0%, ${({ theme }) => theme.colors.white} 100%);
   position: relative;
   overflow: hidden;
+  font-family: ${({ theme }) => theme.fonts.body};
 
   &::before {
     content: '';
@@ -29,7 +30,7 @@ const SectionTitle = styled(motion.h2)`
   font-weight: 700;
   color: ${({ theme }) => theme.colors.text};
   position: relative;
-  font-family: 'Inter', sans-serif;
+  font-family: ${({ theme }) => theme.fonts.body};
 
   &::after {
     content: '';
@@ -53,7 +54,7 @@ const ContactForm = styled(motion.form)`
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
-  font-family: 'Inter', sans-serif;
+  font-family: ${({ theme }) => theme.fonts.body};
 
   &::before {
     content: '';
@@ -77,8 +78,8 @@ const Label = styled.label`
   font-weight: 500;
   color: ${({ theme }) => theme.colors.text};
   font-size: 0.9rem;
-  text-transform: uppercase;
   letter-spacing: 1px;
+  font-family: ${({ theme }) => theme.fonts.body};
 `;
 
 const Input = styled.input`
@@ -87,7 +88,7 @@ const Input = styled.input`
   border: 2px solid #e0e0e0;
   border-radius: 10px;
   font-size: 1rem;
-  font-family: 'Inter', sans-serif;
+  font-family: ${({ theme }) => theme.fonts.body};
   transition: ${({ theme }) => theme.transition};
 
   &:focus {
@@ -105,7 +106,7 @@ const TextArea = styled.textarea`
   font-size: 1rem;
   min-height: 150px;
   resize: vertical;
-  font-family: 'Inter', sans-serif;
+  font-family: ${({ theme }) => theme.fonts.body};
   transition: ${({ theme }) => theme.transition};
 
   &:focus {
@@ -130,7 +131,7 @@ const SubmitButton = styled(motion.button)`
   justify-content: center;
   gap: 10px;
   transition: ${({ theme }) => theme.transition};
-  font-family: 'Inter', sans-serif;
+  font-family: ${({ theme }) => theme.fonts.body};
 
   &:hover {
     background: #0062b3;
