@@ -1,30 +1,69 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { FaPaperPlane, FaSpinner } from 'react-icons/fa';
-import emailjs from 'emailjs-com';
+import { FaPaperPlane } from 'react-icons/fa';
 
 const ContactSection = styled.section`
   padding: 120px 0;
-  background-color: ${({ theme }) => theme.colors.white};
+  background: linear-gradient(135deg, ${({ theme }) => theme.colors.lightBg} 0%, ${({ theme }) => theme.colors.white} 100%);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 113, 227, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
 `;
 
-const SectionTitle = styled.h2`
-  font-size: 3rem;
+const SectionTitle = styled(motion.h2)`
+  font-size: 3.5rem;
   text-align: center;
   margin-bottom: 80px;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.text};
+  position: relative;
+  font-family: 'Inter', sans-serif;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: ${({ theme }) => theme.colors.accent};
+    border-radius: 2px;
+  }
 `;
 
-const ContactForm = styled.form`
+const ContactForm = styled(motion.form)`
   max-width: 600px;
   margin: 0 auto;
-  background: white;
   padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, ${({ theme }) => theme.colors.accent}, ${({ theme }) => theme.colors.primary});
+  }
 `;
 
 const FormGroup = styled.div`
@@ -37,15 +76,19 @@ const Label = styled.label`
   margin-bottom: 8px;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.text};
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 `;
 
 const Input = styled.input`
   width: 100%;
   padding: 15px;
-  border: 1px solid ${({ error }) => error ? '#ff4444' : '#e0e0e0'};
-  border-radius: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
   font-size: 1rem;
-  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  transition: ${({ theme }) => theme.transition};
 
   &:focus {
     outline: none;
@@ -57,12 +100,13 @@ const Input = styled.input`
 const TextArea = styled.textarea`
   width: 100%;
   padding: 15px;
-  border: 1px solid ${({ error }) => error ? '#ff4444' : '#e0e0e0'};
-  border-radius: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
   font-size: 1rem;
   min-height: 150px;
   resize: vertical;
-  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  transition: ${({ theme }) => theme.transition};
 
   &:focus {
     outline: none;
@@ -71,21 +115,13 @@ const TextArea = styled.textarea`
   }
 `;
 
-const ErrorMessage = styled.span`
-  color: #ff4444;
-  font-size: 0.85rem;
-  position: absolute;
-  bottom: -20px;
-  left: 0;
-`;
-
 const SubmitButton = styled(motion.button)`
   width: 100%;
   padding: 16px;
-  background-color: ${({ theme }) => theme.colors.accent};
+  background: ${({ theme }) => theme.colors.accent};
   color: white;
   border: none;
-  border-radius: 12px;
+  border-radius: 10px;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
@@ -93,59 +129,26 @@ const SubmitButton = styled(motion.button)`
   align-items: center;
   justify-content: center;
   gap: 10px;
-  transition: all 0.3s ease;
+  transition: ${({ theme }) => theme.transition};
+  font-family: 'Inter', sans-serif;
 
-  &:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+  &:hover {
+    background: #0062b3;
+    transform: translateY(-2px);
   }
 `;
 
-const SuccessMessage = styled(motion.div)`
-  background-color: #4caf50;
-  color: white;
-  padding: 20px;
-  border-radius: 12px;
-  margin-top: 20px;
-  text-align: center;
-`;
-
 const Contact = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: '',
+    message: ''
   });
 
-  const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  const validateForm = () => {
-    const newErrors = {};
-    
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
-    }
-    
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
-    }
-    
-    if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -153,69 +156,29 @@ const Contact = () => {
       ...prev,
       [name]: value
     }));
-    
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
-    }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
-    
-    setIsSubmitting(true);
-    
-    try {
-      // Replace these with your EmailJS credentials
-      const templateParams = {
-        from_name: formData.name,
-        from_email: formData.email,
-        message: formData.message,
-      };
-      
-      await emailjs.send(
-        'YOUR_SERVICE_ID',
-        'YOUR_TEMPLATE_ID',
-        templateParams,
-        'YOUR_USER_ID'
-      );
-      
-      setIsSuccess(true);
-      setFormData({
-        name: '',
-        email: '',
-        message: '',
-      });
-      
-      setTimeout(() => {
-        setIsSuccess(false);
-      }, 5000);
-    } catch (error) {
-      console.error('Error sending email:', error);
-      setErrors({
-        submit: 'Failed to send message. Please try again later.'
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    alert('Thank you for your message! I will get back to you soon.');
+    setFormData({ name: '', email: '', message: '' });
   };
 
   return (
     <ContactSection id="contact">
-      <SectionTitle>Let's Connect</SectionTitle>
-      <ContactForm
+      <SectionTitle
         ref={ref}
-        onSubmit={handleSubmit}
         initial={{ opacity: 0, y: 20 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.5 }}
+      >
+        Let's Connect
+      </SectionTitle>
+      <ContactForm
+        onSubmit={handleSubmit}
+        initial={{ opacity: 0, y: 20 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.5, delay: 0.2 }}
       >
         <FormGroup>
           <Label htmlFor="name">Name</Label>
@@ -225,12 +188,9 @@ const Contact = () => {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            error={errors.name}
-            placeholder="Your Name"
+            required
           />
-          {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
         </FormGroup>
-        
         <FormGroup>
           <Label htmlFor="email">Email</Label>
           <Input
@@ -239,12 +199,9 @@ const Contact = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            error={errors.email}
-            placeholder="Your Email"
+            required
           />
-          {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
         </FormGroup>
-        
         <FormGroup>
           <Label htmlFor="message">Message</Label>
           <TextArea
@@ -252,48 +209,17 @@ const Contact = () => {
             name="message"
             value={formData.message}
             onChange={handleChange}
-            error={errors.message}
-            placeholder="Your Message"
+            required
           />
-          {errors.message && <ErrorMessage>{errors.message}</ErrorMessage>}
         </FormGroup>
-        
         <SubmitButton
           type="submit"
-          disabled={isSubmitting}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          {isSubmitting ? (
-            <>
-              <FaSpinner className="fa-spin" />
-              Sending...
-            </>
-          ) : (
-            <>
-              <FaPaperPlane />
-              Send Message
-            </>
-          )}
+          Send Message
+          <FaPaperPlane />
         </SubmitButton>
-        
-        {errors.submit && (
-          <ErrorMessage style={{ position: 'static', marginTop: '10px' }}>
-            {errors.submit}
-          </ErrorMessage>
-        )}
-        
-        <AnimatePresence>
-          {isSuccess && (
-            <SuccessMessage
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-            >
-              Thank you for your message! I'll get back to you soon.
-            </SuccessMessage>
-          )}
-        </AnimatePresence>
       </ContactForm>
     </ContactSection>
   );

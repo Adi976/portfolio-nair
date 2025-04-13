@@ -2,19 +2,76 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { FaDownload, FaGraduationCap, FaBriefcase } from 'react-icons/fa';
+import { FaDownload, FaGraduationCap, FaBriefcase, FaCertificate, FaCode } from 'react-icons/fa';
 
 const ResumeSection = styled.section`
   padding: 120px 0;
   background-color: ${({ theme }) => theme.colors.lightBg};
 `;
 
-const SectionTitle = styled.h2`
+const SectionTitle = styled(motion.h2)`
   font-size: 3rem;
   text-align: center;
   margin-bottom: 80px;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.text};
+`;
+
+const ResumePreview = styled(motion.div)`
+  max-width: 800px;
+  margin: 0 auto 60px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  cursor: pointer;
+  transition: ${({ theme }) => theme.transition};
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  }
+`;
+
+const PreviewHeader = styled.div`
+  padding: 30px;
+  background: ${({ theme }) => theme.colors.accent};
+  color: white;
+`;
+
+const PreviewName = styled.h3`
+  font-size: 2rem;
+  margin-bottom: 10px;
+`;
+
+const PreviewContact = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-size: 0.9rem;
+  opacity: 0.9;
+`;
+
+const PreviewContent = styled.div`
+  padding: 30px;
+`;
+
+const PreviewSection = styled.div`
+  margin-bottom: 30px;
+
+  h4 {
+    font-size: 1.2rem;
+    color: ${({ theme }) => theme.colors.accent};
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  p {
+    color: #666;
+    line-height: 1.6;
+  }
 `;
 
 const DownloadButton = styled(motion.a)`
@@ -27,9 +84,12 @@ const DownloadButton = styled(motion.a)`
   border-radius: 30px;
   font-weight: 500;
   text-decoration: none;
-  margin: 0 auto 80px;
+  margin: 0 auto;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: ${({ theme }) => theme.transition};
+  display: block;
+  text-align: center;
+  max-width: 250px;
 
   &:hover {
     transform: translateY(-2px);
@@ -37,91 +97,36 @@ const DownloadButton = styled(motion.a)`
   }
 `;
 
-const TimelineContainer = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-  position: relative;
-  padding: 40px 0;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: 100%;
-    background-color: ${({ theme }) => theme.colors.accent};
-  }
+const SkillsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
 `;
 
-const TimelineItem = styled(motion.div)`
-  position: relative;
-  margin-bottom: 60px;
-  width: 50%;
-  padding: 20px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-
-  &:nth-child(odd) {
-    margin-left: auto;
-    padding-left: 40px;
-  }
-
-  &:nth-child(even) {
-    margin-right: auto;
-    padding-right: 40px;
-  }
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 20px;
-    width: 20px;
-    height: 20px;
-    background-color: ${({ theme }) => theme.colors.accent};
-    border-radius: 50%;
-  }
-
-  &:nth-child(odd)::before {
-    left: -10px;
-  }
-
-  &:nth-child(even)::before {
-    right: -10px;
-  }
-`;
-
-const TimelineIcon = styled.div`
-  position: absolute;
-  top: 20px;
-  color: ${({ theme }) => theme.colors.accent};
-  font-size: 1.5rem;
-`;
-
-const TimelineContent = styled.div`
-  h3 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
+const SkillCategory = styled.div`
+  h5 {
     color: ${({ theme }) => theme.colors.text};
-  }
-
-  h4 {
-    font-size: 1.1rem;
-    color: ${({ theme }) => theme.colors.accent};
     margin-bottom: 10px;
+    font-size: 1rem;
   }
 
-  p {
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  li {
     color: #666;
-    line-height: 1.6;
-  }
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 
-  .date {
-    font-size: 0.9rem;
-    color: #999;
-    margin-bottom: 10px;
+    &::before {
+      content: '•';
+      color: ${({ theme }) => theme.colors.accent};
+    }
   }
 `;
 
@@ -131,62 +136,129 @@ const Resume = () => {
     threshold: 0.1,
   });
 
-  const timelineItems = [
+  const education = [
     {
-      type: 'education',
-      title: 'Bachelor of Technology',
-      subtitle: 'Computer Science',
-      date: '2020 - 2024',
-      description: 'Specialized in Machine Learning and Artificial Intelligence. Participated in various hackathons and coding competitions.',
+      institution: 'RNS Institute of Technology',
+      degree: 'Bachelor of Engineering in Computer Science',
+      period: 'Dec 2022– July 2026',
+      details: 'CGPA: 8.96 (till 5th Sem)'
     },
     {
-      type: 'experience',
-      title: 'Machine Learning Intern',
-      subtitle: 'Tech Company',
-      date: 'Summer 2023',
-      description: 'Worked on developing and implementing machine learning models for predictive analytics.',
+      institution: 'Hill Top School',
+      degree: 'ISC Grade 12',
+      period: 'June 2022',
+      details: 'Percentage: 95%'
     },
     {
-      type: 'education',
-      title: 'High School',
-      subtitle: 'Science Stream',
-      date: '2018 - 2020',
-      description: 'Focused on Mathematics and Computer Science. Participated in various science fairs and competitions.',
-    },
+      institution: 'Hill Top School',
+      degree: 'ICSE Grade 10',
+      period: 'May 2020',
+      details: 'Percentage: 90%'
+    }
   ];
+
+  const projects = [
+    {
+      title: 'Story Pals',
+      tech: 'Ollama, Flutter',
+      description: 'An interactive storytelling platform that engages children with AI-driven conversations, fostering learning, creativity, and emotional development. Integrated built-in parental controls and monitoring features.'
+    },
+    {
+      title: 'Audio Separator',
+      tech: 'Flask, Spleeter, Demucs',
+      description: 'Created a tool for separating vocals and instrumentals from audio files using deep learning models like Demucs. Built a simple interface for karaoke generation.'
+    }
+  ];
+
+  const certifications = [
+    'Microsoft Azure Fundamentals',
+    'Quantum Algorithms and Cryptography',
+    'Introduction to Pytorch for Deep Learning',
+    'Machine Learning Foundation'
+  ];
+
+  const skills = {
+    'Languages': ['Java', 'Python', 'C++', 'SQL'],
+    'Frameworks': ['Flask', 'React.js']
+  };
 
   return (
     <ResumeSection id="resume">
-      <SectionTitle>Resume</SectionTitle>
+      <SectionTitle
+        ref={ref}
+        initial={{ opacity: 0, y: 20 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.5 }}
+      >
+        Resume
+      </SectionTitle>
+
+      <ResumePreview
+        initial={{ opacity: 0, y: 20 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        onClick={() => window.open('/Adithya Nair JX.pdf', '_blank')}
+      >
+        <PreviewHeader>
+          <PreviewName>Adithya Nair</PreviewName>
+          <PreviewContact>
+            <span>+91 82107 65727</span>
+            <span>adityaanil570@gmail.com</span>
+            <a href="https://www.linkedin.com/in/adithya-nair-in" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://github.com/Adi976" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </PreviewContact>
+        </PreviewHeader>
+        <PreviewContent>
+          <PreviewSection>
+            <h4><FaBriefcase /> Summary</h4>
+            <p>
+              I am a passionate and driven student with a strong foundation in Java, Python, and Machine Learning. 
+              With a deep interest in solving real-world problems, I strive to build technology that is both practical 
+              and impactful. My project experience spans audio processing, edtech, and recommendation systems, reflecting 
+              a clear focus on creating human-centered solutions.
+            </p>
+          </PreviewSection>
+
+          <PreviewSection>
+            <h4><FaGraduationCap /> Education</h4>
+            {education.map((edu, index) => (
+              <div key={index} style={{ marginBottom: '15px' }}>
+                <h5>{edu.institution}</h5>
+                <p>{edu.degree}</p>
+                <p style={{ color: '#666', fontSize: '0.9rem' }}>
+                  {edu.period} | {edu.details}
+                </p>
+              </div>
+            ))}
+          </PreviewSection>
+
+          <PreviewSection>
+            <h4><FaCode /> Skills</h4>
+            <SkillsGrid>
+              {Object.entries(skills).map(([category, items]) => (
+                <SkillCategory key={category}>
+                  <h5>{category}</h5>
+                  <ul>
+                    {items.map((skill, index) => (
+                      <li key={index}>{skill}</li>
+                    ))}
+                  </ul>
+                </SkillCategory>
+              ))}
+            </SkillsGrid>
+          </PreviewSection>
+        </PreviewContent>
+      </ResumePreview>
+
       <DownloadButton
-        href="/resume.pdf"
+        href="/Adithya Nair JX.pdf"
         download
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
         <FaDownload />
-        Download CV
+        Download Full Resume
       </DownloadButton>
-      <TimelineContainer ref={ref}>
-        {timelineItems.map((item, index) => (
-          <TimelineItem
-            key={index}
-            initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5, delay: index * 0.2 }}
-          >
-            <TimelineIcon>
-              {item.type === 'education' ? <FaGraduationCap /> : <FaBriefcase />}
-            </TimelineIcon>
-            <TimelineContent>
-              <h3>{item.title}</h3>
-              <h4>{item.subtitle}</h4>
-              <div className="date">{item.date}</div>
-              <p>{item.description}</p>
-            </TimelineContent>
-          </TimelineItem>
-        ))}
-      </TimelineContainer>
     </ResumeSection>
   );
 };

@@ -22,13 +22,11 @@ const SectionTitle = styled(motion.h2)`
 
 const AboutContent = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: ${props => props.theme.spacing.xl};
-  align-items: center;
-
-  @media (max-width: ${props => props.theme.breakpoints.tablet}) {
-    grid-template-columns: 1fr;
-  }
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 ${props => props.theme.spacing.md};
 `;
 
 const AboutText = styled(motion.div)`
@@ -36,44 +34,60 @@ const AboutText = styled(motion.div)`
     font-size: 1.1rem;
     margin-bottom: ${props => props.theme.spacing.md};
     color: #666;
+    line-height: 1.8;
   }
 `;
 
-const Skills = styled(motion.div)`
+const SkillsGrid = styled.div`
   display: grid;
-  gap: ${props => props.theme.spacing.md};
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
 `;
 
-const SkillItem = styled(motion.div)`
-  background: ${props => props.theme.colors.lightBg};
-  padding: ${props => props.theme.spacing.md};
-  border-radius: ${props => props.theme.spacing.sm};
-  transition: ${props => props.theme.transitions.default};
+const SkillCategory = styled(motion.div)`
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: ${({ theme }) => theme.transition};
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: ${props => props.theme.shadows.medium};
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   }
-`;
 
-const SkillName = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: ${props => props.theme.spacing.sm};
-  font-weight: 600;
-`;
+  h5 {
+    color: ${({ theme }) => theme.colors.accent};
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 
-const SkillBar = styled.div`
-  height: 8px;
-  background-color: #e0e0e0;
-  border-radius: 4px;
-  overflow: hidden;
-`;
+  ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
 
-const SkillLevel = styled(motion.div)`
-  height: 100%;
-  background: linear-gradient(90deg, ${props => props.theme.colors.accent}, #00a2ff);
-  border-radius: 4px;
+  li {
+    background: ${({ theme }) => theme.colors.lightBg};
+    color: ${({ theme }) => theme.colors.text};
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: ${({ theme }) => theme.transition};
+
+    &:hover {
+      background: ${({ theme }) => theme.colors.accent};
+      color: white;
+    }
+  }
 `;
 
 const About = () => {
@@ -82,19 +96,19 @@ const About = () => {
     triggerOnce: true,
   });
 
-  const skills = [
-    { name: 'Machine Learning', level: 90 },
-    { name: 'Python', level: 85 },
-    { name: 'Data Analysis', level: 80 },
-    { name: 'Deep Learning', level: 75 },
-  ];
+  const skills = {
+    'Programming Languages': ['Java', 'Python', 'C++', 'SQL'],
+    'Web Development': ['Bootstrap', 'React.js', 'Flask'],
+    'Machine Learning': [ 'PyTorch', 'Scikit-learn'],
+    'Tools & Technologies': ['Azure', 'Flutter', 'Ollama']
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: 0.1,
       },
     },
   };
@@ -128,33 +142,28 @@ const About = () => {
             animate={inView ? "visible" : "hidden"}
           >
             <motion.p variants={itemVariants}>
-              I'm a forward-thinking student with a deep passion for Artificial Intelligence and its potential to transform our world for the better. My journey in technology is driven by curiosity and a commitment to continuous learning.
+              I am a passionate and driven student with a strong foundation in Java, Python, and Machine Learning. With a deep interest in solving real-world problems, I strive to build technology that is both practical and impactful.
             </motion.p>
             <motion.p variants={itemVariants}>
-              I believe in the power of AI to solve complex problems and create meaningful impact. When I'm not immersed in code, you can find me exploring new technologies, contributing to open-source projects, or enjoying music.
+              My project experience spans audio processing, edtech, and recommendation systems, reflecting a clear focus on creating human-centered solutions. I bring a problem-solving mindset, a collaborative spirit, and a positive, perseverant attitude that fuels my drive to keep learning and building with purpose.
             </motion.p>
           </AboutText>
-          <Skills
+          <SkillsGrid
             variants={containerVariants}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
           >
-            {skills.map((skill, index) => (
-              <SkillItem key={skill.name} variants={itemVariants}>
-                <SkillName>
-                  <span>{skill.name}</span>
-                  <span>{skill.level}%</span>
-                </SkillName>
-                <SkillBar>
-                  <SkillLevel
-                    initial={{ width: 0 }}
-                    animate={inView ? { width: `${skill.level}%` } : {}}
-                    transition={{ duration: 1, delay: index * 0.2 }}
-                  />
-                </SkillBar>
-              </SkillItem>
+            {Object.entries(skills).map(([category, items]) => (
+              <SkillCategory key={category} variants={itemVariants}>
+                <h5>{category}</h5>
+                <ul>
+                  {items.map((skill, index) => (
+                    <li key={index}>{skill}</li>
+                  ))}
+                </ul>
+              </SkillCategory>
             ))}
-          </Skills>
+          </SkillsGrid>
         </AboutContent>
       </div>
     </AboutSection>
