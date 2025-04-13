@@ -103,17 +103,17 @@ const Gallery = () => {
 
   const images = [
     {
-      src: "/gallery/iisc.jpg",
+      src: "/gallery/IISC.jpg",
       title: "IISC Open Day 2025",
     },
     {
-      src: "/gallery/induction.jpg",
+      src: "/gallery/Induction.jpg",
       title: "Induction Ceremony 2023",
     },
     {
-        src: "/gallery/Azure Training.jpg",
-        title: "AZ-900 Training 2024",
-      },
+      src: "/gallery/Azure Training.jpg",
+      title: "AZ-900 Training 2024",
+    },
     {
       src: "/gallery/OS Activity.jpg",
       title: "OS Activity 2024",
@@ -122,10 +122,10 @@ const Gallery = () => {
       src: "/gallery/NCMC.jpg",
       title: "NCMC Activity 2024",
     },
-      {
-        src: "/gallery/Physics Seminar.jpg",
-        title: "Physics Seminar 2023",
-      },
+    {
+      src: "/gallery/Physics Seminar.jpg",
+      title: "Physics Seminar 2023",
+    },
     // Add more images here with their titles and descriptions
   ];
 
