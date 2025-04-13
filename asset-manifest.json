@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/portfolio-nair/static/js/main.fdc20393.js",
+    "main.js": "/portfolio-nair/static/js/main.72243dda.js",
     "index.html": "/portfolio-nair/index.html",
-    "main.fdc20393.js.map": "/portfolio-nair/static/js/main.fdc20393.js.map"
+    "main.72243dda.js.map": "/portfolio-nair/static/js/main.72243dda.js.map"
   },
   "entrypoints": [
-    "static/js/main.fdc20393.js"
+    "static/js/main.72243dda.js"
   ]
 }
