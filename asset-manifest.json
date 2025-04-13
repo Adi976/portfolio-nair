@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/portfolio-nair/static/js/main.d07c98f6.js",
+    "main.js": "/portfolio-nair/static/js/main.bae22228.js",
     "index.html": "/portfolio-nair/index.html",
-    "main.d07c98f6.js.map": "/portfolio-nair/static/js/main.d07c98f6.js.map"
+    "main.bae22228.js.map": "/portfolio-nair/static/js/main.bae22228.js.map"
   },
   "entrypoints": [
-    "static/js/main.d07c98f6.js"
+    "static/js/main.bae22228.js"
   ]
 }
