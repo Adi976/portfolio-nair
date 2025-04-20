@@ -1,48 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { TrendingUp, TrendingDown, Activity, Calendar, Search, Settings, Info, Bell, User, Menu, X, ChevronDown, DollarSign, PieChart, Clock } from 'lucide-react';
-
-// Sample data
-const stockData = [
-  { name: 'Jan', RELIANCE: 145.82, TCS: 222.42, HDFCBANK: 1827.36, INFY: 3206.20, prediction: 150.10 },
-  { name: 'Feb', RELIANCE: 121.26, TCS: 232.38, HDFCBANK: 2095.89, INFY: 3092.93, prediction: 125.50 },
-  { name: 'Mar', RELIANCE: 119.90, TCS: 235.77, HDFCBANK: 2129.78, INFY: 3094.08, prediction: 122.30 },
-  { name: 'Apr', RELIANCE: 131.46, TCS: 252.18, HDFCBANK: 2285.88, INFY: 3340.88, prediction: 135.20 },
-  { name: 'May', RELIANCE: 124.61, TCS: 249.68, HDFCBANK: 2411.56, INFY: 3223.91, prediction: 128.40 },
-  { name: 'Jun', RELIANCE: 139.96, TCS: 265.02, HDFCBANK: 2506.32, INFY: 3415.25, prediction: 145.30 },
-  { name: 'Jul', RELIANCE: 145.86, TCS: 284.91, HDFCBANK: 2704.42, INFY: 3331.48, prediction: 150.70 },
-  { name: 'Aug', RELIANCE: 151.83, TCS: 301.14, HDFCBANK: 2874.79, INFY: 3199.95, prediction: 157.20 },
-  { name: 'Sep', RELIANCE: 141.50, TCS: 284.00, HDFCBANK: 2673.52, INFY: 3285.04, prediction: 146.80 },
-  { name: 'Oct', RELIANCE: 149.80, TCS: 331.62, HDFCBANK: 2924.35, INFY: 3372.41, prediction: 155.40 },
-  { name: 'Nov', RELIANCE: 165.30, TCS: 337.91, HDFCBANK: 2922.40, INFY: 3504.56, prediction: 170.10 },
-  { name: 'Dec', RELIANCE: 177.57, TCS: 336.32, HDFCBANK: 2897.04, INFY: 3334.34, prediction: 183.20 },
-];
-
-const performanceData = [
-  { name: '1D', actual: -1.2, predicted: -0.8 },
-  { name: '1W', actual: 2.4, predicted: 2.1 },
-  { name: '1M', actual: 5.7, predicted: 5.2 },
-  { name: '3M', actual: 12.3, predicted: 11.5 },
-  { name: '6M', actual: 18.7, predicted: 17.9 },
-  { name: 'YTD', actual: 24.2, predicted: 23.1 },
-  { name: '1Y', actual: 31.5, predicted: 30.2 },
-];
-
-const topStocks = [
-  { name: 'RELIANCE', price: 177.57, change: 1.23, changePercent: 0.7 },
-  { name: 'TCS', price: 336.32, change: -2.43, changePercent: -0.72 },
-  { name: 'HDFCBANK', price: 2897.04, change: 15.35, changePercent: 0.53 },
-  { name: 'INFY', price: 3334.34, change: -24.15, changePercent: -0.72 },
-  { name: 'HINDUNILVR', price: 352.26, change: 8.34, changePercent: 2.42 },
-];
 
 export default function StockDashboard() {
   const [selectedStock, setSelectedStock] = useState('RELIANCE');
   const [selectedTimeframe, setSelectedTimeframe] = useState('1Y');
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [prediction, setPrediction] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [stockData, setStockData] = useState([]);
+  const [marketData, setMarketData] = useState([]);
+  const [predictions, setPredictions] = useState([]);
+  const [performance, setPerformance] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
   // Chart colors
@@ -55,230 +22,99 @@ export default function StockDashboard() {
     chartArea: 'rgba(99, 102, 241, 0.1)',
   };
 
-  const handlePrediction = async () => {
-    setLoading(true);
-    setError(null);
+  useEffect(() => {
+    fetchData();
+  }, [selectedStock, selectedTimeframe]);
+
+  const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:5000/predict', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ symbol: selectedStock }),
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to get prediction');
+      setLoading(true);
+      setError(null);
+
+      // Sample data for development
+      const sampleStockData = [
+        { date: '2024-01-01', open: 1500.0, high: 1520.0, low: 1480.0, close: 1510.0, volume: 1000000 },
+        { date: '2024-01-02', open: 1510.0, high: 1530.0, low: 1490.0, close: 1520.0, volume: 1200000 },
+        { date: '2024-01-03', open: 1520.0, high: 1540.0, low: 1500.0, close: 1530.0, volume: 1100000 },
+      ];
+
+      const sampleMarketData = [];
+
+      const samplePredictions = [
+        { symbol: 'RELIANCE', current_price: 2800.0, prediction1d: 2820.0, prediction1w: 2850.0, accuracy: 85 },
+        { symbol: 'TCS', current_price: 3500.0, prediction1d: 3520.0, prediction1w: 3550.0, accuracy: 90 },
+      ];
+
+      const samplePerformance = [
+        { name: '1D', actual: 1.2, predicted: 1.0 },
+        { name: '1W', actual: 2.4, predicted: 2.1 },
+        { name: '1M', actual: 5.7, predicted: 5.2 },
+      ];
+
+      try {
+        // Try to fetch real data first
+        const stockResponse = await fetch(`http://localhost:5000/api/stock-data?symbol=${selectedStock}&timeframe=${selectedTimeframe}`);
+        if (!stockResponse.ok) throw new Error('Backend server not available');
+        const stockData = await stockResponse.json();
+        setStockData(stockData);
+
+        const marketResponse = await fetch('http://localhost:5000/api/market-data');
+        if (!marketResponse.ok) throw new Error('Backend server not available');
+        const marketData = await marketResponse.json();
+        setMarketData(marketData);
+
+        const predictionsResponse = await fetch(`http://localhost:5000/api/predictions?symbols=${selectedStock}`);
+        if (!predictionsResponse.ok) throw new Error('Backend server not available');
+        const predictions = await predictionsResponse.json();
+        setPredictions(predictions);
+
+        const performanceResponse = await fetch(`http://localhost:5000/api/performance?symbol=${selectedStock}`);
+        if (!performanceResponse.ok) throw new Error('Backend server not available');
+        const performance = await performanceResponse.json();
+        setPerformance(performance);
+
+      } catch (err) {
+        // If backend is not available, use sample data
+        console.log('Using sample data:', err.message);
+        setStockData(sampleStockData);
+        setMarketData(sampleMarketData);
+        setPredictions(samplePredictions);
+        setPerformance(samplePerformance);
       }
-      
-      const data = await response.json();
-      setPrediction(data);
+
     } catch (err) {
-      setError(err.message);
+      setError('Error loading data. Please try again later.');
+      console.error('Error:', err);
     } finally {
       setLoading(false);
     }
   };
 
-  // Filter data based on selected stock and timeframe
-  const filteredStockData = stockData.map(item => ({
-    name: item.name,
-    value: item[selectedStock],
-    prediction: item.prediction
-  }));
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
+      </div>
+    );
+  }
 
-  const filteredPerformanceData = performanceData.find(item => item.name === selectedTimeframe);
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-red-600">{error}</div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen bg-gray-50 text-gray-800">
-      {/* Desktop Sidebar */}
-      <div className={`${sidebarOpen ? 'w-64' : 'w-20'} hidden md:block bg-white border-r border-gray-200 transition-all duration-300`}>
-        <div className="flex flex-col h-full">
-          <div className="p-4 flex items-center justify-between">
-            {sidebarOpen ? (
-              <h1 className="text-xl font-bold text-indigo-600">StockSense AI</h1>
-            ) : (
-              <h1 className="text-xl font-bold text-indigo-600">SS</h1>
-            )}
-            <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="p-2 rounded-lg hover:bg-gray-100"
-            >
-              {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
-
-          {/* Stock Selection */}
-          <div className="p-4">
-            <div className="relative">
-              <select
-                value={selectedStock}
-                onChange={(e) => setSelectedStock(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              >
-                {topStocks.map((stock) => (
-                  <option key={stock.name} value={stock.name}>
-                    {stock.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          {/* Timeframe Selection */}
-          <div className="p-4">
-            <div className="relative">
-              <select
-                value={selectedTimeframe}
-                onChange={(e) => setSelectedTimeframe(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              >
-                {performanceData.map((item) => (
-                  <option key={item.name} value={item.name}>
-                    {item.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          {/* Main Chart */}
-          <div className="flex-1 p-4">
-            <div className="bg-white rounded-lg shadow p-4 h-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={filteredStockData}>
-                  <defs>
-                    <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor={colors.chartLine} stopOpacity={0.8}/>
-                      <stop offset="95%" stopColor={colors.chartLine} stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Area
-                    type="monotone"
-                    dataKey="value"
-                    stroke={colors.chartLine}
-                    fillOpacity={1}
-                    fill="url(#colorValue)"
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-
-          {/* Performance Metrics */}
-          {filteredPerformanceData && (
-            <div className="p-4">
-              <div className="bg-white rounded-lg shadow p-4">
-                <h3 className="text-lg font-semibold mb-2">Performance</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-gray-500">Actual</p>
-                    <p className={`text-lg font-semibold ${filteredPerformanceData.actual >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                      {filteredPerformanceData.actual}%
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">Predicted</p>
-                    <p className={`text-lg font-semibold ${filteredPerformanceData.predicted >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                      {filteredPerformanceData.predicted}%
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Prediction Button */}
-          <div className="p-4">
-            <button
-              onClick={handlePrediction}
-              disabled={loading}
-              className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 disabled:opacity-50"
-            >
-              {loading ? 'Predicting...' : 'Get Prediction'}
-            </button>
-            {error && (
-              <p className="mt-2 text-red-600 text-sm">{error}</p>
-            )}
-            {prediction && (
-              <div className="mt-4 p-4 bg-white rounded-lg shadow">
-                <h3 className="text-lg font-semibold mb-2">Prediction Result</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-gray-500">Current Price</p>
-                    <p className="text-lg font-semibold">₹{prediction.current_price.toFixed(2)}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">Predicted Price</p>
-                    <p className="text-lg font-semibold">₹{prediction.next_price.toFixed(2)}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">Price Change</p>
-                    <p className={`text-lg font-semibold ${prediction.price_change >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                      {prediction.price_change.toFixed(2)}%
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">Direction</p>
-                    <p className={`text-lg font-semibold ${prediction.direction === 'up' ? 'text-green-600' : 'text-red-600'}`}>
-                      {prediction.direction.toUpperCase()}
-                    </p>
-                  </div>
-                </div>
-                <div className="mt-4">
-                  <p className="text-sm text-gray-500">Model Performance</p>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-sm">RMSE: {prediction.model_metrics.rmse.toFixed(4)}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm">Accuracy: {(prediction.model_metrics.accuracy * 100).toFixed(2)}%</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-      
-      {/* Mobile menu */}
-      <div className={`fixed inset-0 z-50 ${mobileMenuOpen ? 'block' : 'hidden'}`}>
-        <div className="absolute inset-0 bg-gray-600 opacity-75" onClick={() => setMobileMenuOpen(false)}></div>
-        <div className="absolute inset-y-0 left-0 w-64 bg-white">
-          <div className="p-4 flex justify-between items-center border-b border-gray-200">
-            <h1 className="text-xl font-bold text-indigo-600">StockSense AI</h1>
-            <button onClick={() => setMobileMenuOpen(false)}>
-              <X size={24} />
-            </button>
-          </div>
-          <nav className="p-4">
-            <ul className="space-y-2">
-              <li><a href="#" className="block p-3 text-indigo-600 bg-indigo-50 rounded-lg">Dashboard</a></li>
-              <li><a href="#" className="block p-3 text-gray-700 hover:bg-gray-100 rounded-lg">Predictions</a></li>
-              <li><a href="#" className="block p-3 text-gray-700 hover:bg-gray-100 rounded-lg">Analytics</a></li>
-              <li><a href="#" className="block p-3 text-gray-700 hover:bg-gray-100 rounded-lg">Portfolio</a></li>
-              <li><a href="#" className="block p-3 text-gray-700 hover:bg-gray-100 rounded-lg">History</a></li>
-              <li><a href="#" className="block p-3 text-gray-700 hover:bg-gray-100 rounded-lg">Settings</a></li>
-              <li><a href="#" className="block p-3 text-gray-700 hover:bg-gray-100 rounded-lg">Profile</a></li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-      
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top navbar */}
         <header className="bg-white border-b border-gray-200">
           <div className="flex items-center justify-between p-4">
-            <div className="flex items-center md:hidden">
-              <button onClick={() => setMobileMenuOpen(true)} className="text-gray-500 hover:text-gray-600">
-                <Menu size={24} />
-              </button>
+            <div className="flex items-center">
+              <h1 className="text-xl font-bold text-indigo-600">StockSense AI</h1>
             </div>
             
             <div className="flex-1 max-w-lg mx-4">
@@ -293,14 +129,8 @@ export default function StockDashboard() {
             </div>
             
             <div className="flex items-center space-x-4">
-              <button className="p-2 text-gray-500 hover:text-gray-600 hover:bg-gray-100 rounded-full">
+              <button className="p-2 text-gray-500 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors">
                 <Bell size={20} />
-              </button>
-              <button className="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded-lg">
-                <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-white font-medium">
-                  JD
-                </div>
-                <span className="hidden md:block">John Doe</span>
               </button>
             </div>
           </div>
@@ -311,32 +141,228 @@ export default function StockDashboard() {
           <div className="max-w-7xl mx-auto">
             {/* Header and quick stats */}
             <div className="mb-6">
-              <h2 className="text-2xl font-bold mb-4">Market Dashboard</h2>
+              <h2 className="text-2xl font-bold mb-4">Stock Dashboard</h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="text-sm text-gray-500">S&P 500</p>
-                      <p className="text-xl font-semibold">4,185.47</p>
+              {marketData.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {marketData.map((market, index) => (
+                    <div key={index} className="bg-white p-4 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <p className="text-sm text-gray-500">{market.name}</p>
+                          <p className="text-xl font-semibold">₹{market.value}</p>
+                        </div>
+                        <div className={`${market.trend === 'up' ? 'text-green-500' : 'text-red-500'} flex items-center`}>
+                          {market.trend === 'up' ? <TrendingUp size={20} /> : <TrendingDown size={20} />}
+                          <span className="ml-1 font-medium">{market.change}</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="text-green-500 flex items-center">
-                      <TrendingUp size={20} />
-                      <span className="ml-1 font-medium">1.8%</span>
-                    </div>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+            
+            {/* Main chart */}
+            <div className="bg-white p-4 md:p-6 rounded-xl shadow-sm border border-gray-200 mb-6 hover:shadow-md transition-shadow">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+                <div>
+                  <h3 className="text-lg font-semibold">Stock Performance & Prediction</h3>
+                  <div className="flex items-center mt-1">
+                    <span className="font-medium text-2xl mr-2">₹{stockData[stockData.length - 1]?.close || 0}</span>
+                    <span className="px-2 py-1 text-sm font-medium text-green-800 bg-green-100 rounded-full">
+                      {((stockData[stockData.length - 1]?.close - stockData[0]?.close) / stockData[0]?.close * 100).toFixed(2)}%
+                    </span>
                   </div>
                 </div>
                 
-                <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="text-sm text-gray-500">NASDAQ</p>
-                      <p className="text-xl font-semibold">13,748.74</p>
-                    </div>
-                    <div className="text-green-500 flex items-center">
-                      <TrendingUp size={20} />
-                      <span className="ml-1 font-medium">2.3%</span>
-                    </div>
+                <div className="flex mt-4 md:mt-0 space-x-4">
+                  <div>
+                    <select 
+                      value={selectedStock}
+                      onChange={(e) => setSelectedStock(e.target.value)}
+                      className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    >
+                      <option value="RELIANCE">RELIANCE</option>
+                      <option value="TCS">TCS</option>
+                      <option value="HDFCBANK">HDFCBANK</option>
+                      <option value="INFY">INFY</option>
+                      <option value="HINDUNILVR">HINDUNILVR</option>
+                    </select>
+                  </div>
+                  
+                  <div className="flex border border-gray-300 rounded-lg overflow-hidden">
+                    {['1D', '1W', '1M', '3M', '6M', '1Y'].map(timeframe => (
+                      <button
+                        key={timeframe}
+                        className={`px-3 py-2 text-sm ${selectedTimeframe === timeframe ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'} transition-colors`}
+                        onClick={() => setSelectedTimeframe(timeframe)}
+                      >
+                        {timeframe}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              
+              {/* Chart component */}
+              <div className="h-72 md:h-96">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart
+                    data={stockData}
+                    margin={{top: 10, right: 10, left: 0, bottom: 0}}
+                  >
+                    <defs>
+                      <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor={colors.chartLine} stopOpacity={0.1}/>
+                        <stop offset="95%" stopColor={colors.chartLine} stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                    <XAxis dataKey="date" tick={{fontSize: 12}} />
+                    <YAxis 
+                      domain={['auto', 'auto']}
+                      tick={{fontSize: 12}}
+                      tickFormatter={(value) => `₹${value}`}
+                    />
+                    <Tooltip 
+                      formatter={(value) => [`₹${value}`, 'Price']} 
+                      labelFormatter={(label) => `Date: ${label}`}
+                    />
+                    <Area 
+                      type="monotone" 
+                      dataKey="close" 
+                      stroke={colors.chartLine} 
+                      fillOpacity={1} 
+                      fill="url(#colorPrice)" 
+                      strokeWidth={2}
+                    />
+                    <Legend />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+              
+              <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                  <p className="text-sm text-gray-500">Opening Price</p>
+                  <p className="font-medium">₹{stockData[0]?.open || 0}</p>
+                </div>
+                <div className="bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                  <p className="text-sm text-gray-500">High</p>
+                  <p className="font-medium">₹{Math.max(...stockData.map(d => d.high)) || 0}</p>
+                </div>
+                <div className="bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                  <p className="text-sm text-gray-500">Low</p>
+                  <p className="font-medium">₹{Math.min(...stockData.map(d => d.low)) || 0}</p>
+                </div>
+                <div className="bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                  <p className="text-sm text-gray-500">Volume</p>
+                  <p className="font-medium">{stockData[stockData.length - 1]?.volume || 0}</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Split view - predictions & performance */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+              {/* Prediction Table */}
+              <div className="bg-white p-4 md:p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-lg font-semibold">AI Predictions</h3>
+                  <div className="flex items-center text-sm text-gray-500">
+                    <Clock size={16} className="mr-1" />
+                    <span>Updated 2 hours ago</span>
+                  </div>
+                </div>
+                
+                <div className="overflow-x-auto">
+                  <table className="w-full table-auto">
+                    <thead>
+                      <tr className="text-left text-gray-500 border-b">
+                        <th className="pb-3 font-medium">Stock</th>
+                        <th className="pb-3 font-medium">Current</th>
+                        <th className="pb-3 font-medium">Tomorrow</th>
+                        <th className="pb-3 font-medium">Next Week</th>
+                        <th className="pb-3 font-medium">Accuracy</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {predictions.map((prediction) => (
+                        <tr key={prediction.symbol} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                          <td className="py-3 font-medium">{prediction.symbol}</td>
+                          <td className="py-3">₹{prediction.current_price}</td>
+                          <td className={`py-3 ${prediction.prediction1d > prediction.current_price ? 'text-green-600' : 'text-red-600'}`}>
+                            ₹{prediction.prediction1d}
+                          </td>
+                          <td className={`py-3 ${prediction.prediction1w > prediction.current_price ? 'text-green-600' : 'text-red-600'}`}>
+                            ₹{prediction.prediction1w}
+                          </td>
+                          <td className="py-3">
+                            <div className="w-16 bg-gray-200 rounded-full h-2">
+                              <div 
+                                className="bg-indigo-600 h-2 rounded-full" 
+                                style={{ width: `${prediction.accuracy}%` }}
+                              ></div>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              
+              {/* Performance comparison */}
+              <div className="bg-white p-4 md:p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-lg font-semibold">Prediction Performance</h3>
+                  <select 
+                    value={selectedStock}
+                    onChange={(e) => setSelectedStock(e.target.value)}
+                    className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  >
+                    <option value="RELIANCE">RELIANCE</option>
+                    <option value="TCS">TCS</option>
+                    <option value="HDFCBANK">HDFCBANK</option>
+                    <option value="INFY">INFY</option>
+                    <option value="HINDUNILVR">HINDUNILVR</option>
+                  </select>
+                </div>
+                
+                <div className="h-72">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                      data={performance}
+                      margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                      <XAxis dataKey="name" />
+                      <YAxis 
+                        tickFormatter={(value) => `${value}%`} 
+                        domain={[-5, 35]}
+                      />
+                      <Tooltip 
+                        formatter={(value) => [`${value}%`, '']} 
+                        cursor={{ fillOpacity: 0.2 }}
+                      />
+                      <Legend />
+                      <Bar dataKey="actual" fill={colors.actual} name="Actual" radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="predicted" fill={colors.predicted} name="Predicted" radius={[4, 4, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+                
+                <div className="flex justify-between mt-4 px-4 text-sm">
+                  <div className="text-center">
+                    <p className="text-gray-500">Prediction Accuracy</p>
+                    <p className="font-semibold text-lg">93.8%</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-gray-500">Average Deviation</p>
+                    <p className="font-semibold text-lg">±0.74%</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-gray-500">Success Rate</p>
+                    <p className="font-semibold text-lg">91.2%</p>
                   </div>
                 </div>
               </div>
